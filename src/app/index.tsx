@@ -1,6 +1,6 @@
 // app/index.tsx
 import { View } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WeatherCard from "@/components/WeatherCard";
 import SearchBox from "@/components/SearchBox";
 import RiwayatList from "@/components/RiwayatList";
@@ -8,6 +8,10 @@ import RiwayatList from "@/components/RiwayatList";
 export default function HalamanUtama() {
   const [kotaAktif, setKotaAktif] = useState("Pekalongan");
   const [riwayat, setRiwayat] = useState<string[]>(["Pekalongan"]);
+
+  useEffect(() => {
+    console.log("Kota aktif berubah menjadi:", kotaAktif);
+  }, [kotaAktif]);
 
   function handleCari(kota: string) {
     setKotaAktif(kota);
