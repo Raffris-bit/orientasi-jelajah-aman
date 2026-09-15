@@ -18,7 +18,7 @@ export default function TabTentang() {
           Versi 1.0.0
         </Text>
         <Text style={{ fontSize: typeScale.isi, marginTop: spacing.sedang }}>
-          Pembuat: [Nama Anda]
+          Pembuat: M. RAFI RIs
         </Text>
         <Text style={{ fontSize: typeScale.keterangan, marginTop: spacing.sedang, color: "#666" }}>
           Aplikasi informasi cuaca dan kualitas udara untuk perjalanan yang lebih aman.
