@@ -11,7 +11,7 @@ export default function RiwayatList({ daftarKota }: RiwayatListProps) {
     <View>
       {daftarKota.map((kota) => (
         // Format objek pada href lolos pengecekan TypeScript Expo Router
-        <Link key={kota} href={{ pathname: "/detail/[kota]", params: { kota } }}>
+        <Link key={kota} href={{ pathname: "/detail/[kota]" as any, params: { kota } }}>
           <Text>{kota}</Text>
         </Link>
       ))}
