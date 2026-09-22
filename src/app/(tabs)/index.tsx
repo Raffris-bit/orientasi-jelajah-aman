@@ -48,13 +48,23 @@ export default function HalamanUtama() {
 
       {pesanError && (
         <View>
-          <Text>{pesanError}</Text>
+          <Text accessibilityLabel="Pesan kesalahan saat mengambil data kota">
+            {pesanError}
+          </Text>
           <Button title="Coba Lagi" onPress={() => ambilData(teksTertunda)} />
         </View>
       )}
 
       {!sedangMemuat && !pesanError && teksTertunda.length > 0 && hasil.length === 0 && (
-        <Text>Kota tidak ditemukan</Text>
+        <Text accessibilityLabel="Hasil pencarian kota kosong">
+          Kota tidak ditemukan
+        </Text>
+      )}
+
+      {!sedangMemuat && !pesanError && hasil.length > 0 && (
+        <Text accessibilityLabel={`Ditemukan ${hasil.length} kota dari hasil pencarian`}>
+          Ditemukan {hasil.length} kota
+        </Text>
       )}
 
       {hasil.map((kota) => (
