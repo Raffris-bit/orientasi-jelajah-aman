@@ -1,5 +1,5 @@
 // src/app/(tabs)/index.tsx
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 
 import SearchBox from "../../components/SearchBox";
 import WeatherCard from "../../components/WeatherCard";
@@ -21,6 +21,7 @@ import { cariKota } from "../../services/geocodingService";
 import { ambilCuacaOfflineFirst, BATAS_CACHE_MS } from "../../services/cuacaRepository";
 import { bersihkanCacheLama, daftarKotaTersimpan } from "../../services/cacheRepository";
 import { mintaIzinLokasi, ambilKoordinatSaatIni } from "../../services/locationService";
+import { ambilSemuaFavorit } from "../../services/favoritStorage";
 import { konversiTingkatAQI } from "../../services/weatherAdapter";
 import { labelKodeCuaca } from "../../constants/weatherCodes";
 
@@ -36,6 +37,7 @@ export default function HalamanUtama() {
   const [sedangMemuat, setSedangMemuat] = useState(false);
   const [pesanError, setPesanError] = useState<string | null>(null);
   const [pesanLokasi, setPesanLokasi] = useState<string | null>(null);
+  const [isFavorit, setIsFavorit] = useState(false); // Latihan Mandiri 3: Cek apakah kota sudah favorit
 
   const teksTertunda = useDebounce(teksCari, 500);
   const requestIdRef = useRef(0); // pencegah race condition
@@ -50,6 +52,17 @@ export default function HalamanUtama() {
       .then(muatKotaTersimpan)
       .catch(() => {});
   }, []);
+
+  // Latihan Mandiri 3: Cek apakah kota terpilih sudah ada di daftar favorit
+  useFocusEffect(
+    useCallback(() => {
+      if (kotaTerpilih) {
+        ambilSemuaFavorit().then((daftar) => {
+          setIsFavorit(daftar.some((k) => k.id === kotaTerpilih.id));
+        });
+      }
+    }, [kotaTerpilih])
+  );
 
   useEffect(() => {
     if (teksTertunda.trim().length === 0) {
@@ -178,20 +191,23 @@ export default function HalamanUtama() {
               onPress={() => pilihKota(kotaTerpilih, true)}
             />
 
-            <Button
-              title="Tambahkan ke Favorit"
-              onPress={() =>
-                router.push({
-                  pathname: "/tambah-favorit",
-                  params: {
-                    id: String(kotaTerpilih.id),
-                    nama: kotaTerpilih.name,
-                    lat: String(kotaTerpilih.latitude),
-                    lon: String(kotaTerpilih.longitude),
-                  },
-                })
-              }
-            />
+            {/* Latihan Mandiri 3: Sembunyikan tombol jika sudah favorit atau lokasi GPS (id: -1) */}
+            {!isFavorit && kotaTerpilih.id !== -1 && (
+              <Button
+                title="Tambahkan ke Favorit"
+                onPress={() =>
+                  router.push({
+                    pathname: "/tambah-favorit",
+                    params: {
+                      id: String(kotaTerpilih.id),
+                      nama: kotaTerpilih.name,
+                      lat: String(kotaTerpilih.latitude),
+                      lon: String(kotaTerpilih.longitude),
+                    },
+                  })
+                }
+              />
+            )}
           </>
         )}
 
