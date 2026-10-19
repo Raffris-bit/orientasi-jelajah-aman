@@ -1,3 +1,21 @@
+# Jelajah Aman - Aplikasi Cuaca dan Kualitas Udara
+
+Aplikasi Jelajah Aman adalah aplikasi mobile yang menampilkan informasi cuaca dan kualitas udara dengan dukungan mode offline-first menggunakan SQLite dan cache.
+
+## Penjelasan Status Data Cache
+
+Aplikasi ini mengimplementasikan tiga status data yang berbeda:
+
+1. **Cache-segar**: Data yang disimpan di perangkat dengan umur kurang dari 30 menit. Data ini dianggap masih akurat dan tidak memerlukan pembaruan dari internet, sehingga aplikasi langsung menampilkannya tanpa memanggil API.
+
+2. **Cache-basi**: Data yang disimpan di perangkat dengan umur lebih dari 30 menit. Aplikasi akan mencoba mengambil data terbaru dari internet, tetapi jika gagal (offline), data lama ini tetap ditampilkan dengan label peringatan bahwa data mungkin sudah usang.
+
+3. **First-run offline**: Kondisi ketika pengguna membuka kota baru tanpa koneksi internet dan belum ada data tersimpan untuk kota tersebut. Dalam kondisi ini, aplikasi akan menampilkan pesan error dan tidak dapat menampilkan data.
+
+Label status data ini sangat penting bagi pengguna karena memberikan transparansi tentang tingkat keakuratan dan kebaruan informasi yang mereka lihat. Pengguna berhak tahu apakah angka suhu dan kualitas udara yang ditampilkan adalah data real-time atau salinan lama, sehingga mereka dapat membuat keputusan yang tepat berdasarkan informasi tersebut.
+
+---
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
