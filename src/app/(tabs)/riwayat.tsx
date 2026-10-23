@@ -62,6 +62,7 @@ export default function TabRiwayat() {
         kotaNama: item.nama,
         kotaLat: String(item.latitude),
         kotaLon: String(item.longitude),
+        timestamp: String(Date.now()), // Tambahkan timestamp agar bisa reload
       },
     });
   }

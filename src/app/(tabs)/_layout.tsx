@@ -34,7 +34,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="riwayat"
         options={{
-          title: "Riwayat",
+          title: "Favorit/Riwayat",
+          headerTitle: "Favorit & Riwayat",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="time" size={size} color={color} />
           ),

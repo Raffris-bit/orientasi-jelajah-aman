@@ -38,6 +38,7 @@ export default function HalamanUtama() {
     kotaNama?: string;
     kotaLat?: string;
     kotaLon?: string;
+    timestamp?: string;
   }>();
 
   // UTS: Gunakan tema
@@ -176,7 +177,7 @@ export default function HalamanUtama() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.kotaId, params.kotaNama, params.kotaLat, params.kotaLon]);
+  }, [params.kotaId, params.kotaNama, params.kotaLat, params.kotaLon, params.timestamp]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
